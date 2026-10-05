@@ -73,6 +73,12 @@ projects/mio/
 編集画面は `npm run dev` で起動し、「プロジェクトを開く」→ **mio** を選びます。
 目の開閉、顔・体の小さな変形、呼吸、髪11束の揺れ、簡易の口の動きを確認できます。
 
+## iPhoneで外出先から見る
+
+再構築後に `npm run export:mio` を実行すると、私用の `projects/mio/mio-viewer.json` を作成します。
+このファイルをiPhoneへ渡し、閲覧ページで初回だけ読み込みます。画像は端末内に保存し、GitHubへ公開しません。
+URLと詳しい操作手順は [MIO_IPHONE.md](MIO_IPHONE.md) にあります。
+
 ## 保存している設定と合成方法
 
 | ファイル | 内容 |

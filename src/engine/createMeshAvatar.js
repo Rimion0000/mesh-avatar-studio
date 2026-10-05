@@ -13,6 +13,9 @@ const EYE_PARTS = ['ball', 'low', 'crease', 'lash'];   // back to front
 const imageCache = new Map();
 const jsonCache = new Map();
 async function loadJson(src) {
+  // Imported private projects use disposable blob URLs. Do not retain their data
+  // after the caller destroys an avatar and releases those URLs.
+  if (src.startsWith('blob:')) return fetch(src).then(r => { if (!r.ok) throw new Error(`failed to load ${src}`); return r.json(); });
   if (!jsonCache.has(src)) jsonCache.set(src, fetch(src).then(r => { if (!r.ok) throw new Error(`failed to load ${src}`); return r.json(); }));
   return jsonCache.get(src);
 }
@@ -24,7 +27,7 @@ function loadImage(src) {
     i.onerror = () => rej(new Error(`failed to load ${src}`));
     i.src = src;
   });
-  imageCache.set(src, result);
+  if (!src.startsWith('blob:')) imageCache.set(src, result);
   return result;
 }
 

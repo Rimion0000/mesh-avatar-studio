@@ -9,6 +9,10 @@
     "test": "vitest run",
     "lint": "eslint src tests e2e tools/*.mjs",
     "build": "tsc --noEmit && vite build",
+    "build:viewer": "tsc --noEmit && vite build --config vite.viewer.config.ts",
+    "dev:viewer": "vite --config vite.viewer.config.ts --host 127.0.0.1",
+    "export:mio": "node --experimental-strip-types tools/export-mio-viewer.mjs",
+    "publish:viewer": "node tools/publish-mio-viewer.mjs",
     "e2e": "playwright test",
     "validate-rig": "node --experimental-strip-types tools/validate-rig.mjs",
     "render-poses": "node --experimental-strip-types tools/render-poses.mjs"
