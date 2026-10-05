@@ -54,6 +54,11 @@ test('iPhone view keeps images local, reloads saved Mio, and deletes it', async 
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.setViewportSize({ width: 844, height: 390 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  // A canvas's intrinsic height must not stretch its grid row and clip the feet.
+  expect(await page.locator('canvas').evaluate(canvas => {
+    const stage = canvas.parentElement!, box = canvas.getBoundingClientRect();
+    return box.height <= stage.clientHeight + 1 && box.width <= stage.clientWidth + 1;
+  })).toBe(true);
   await page.reload();
   await expect(page.getByRole('status')).toContainText('保存したMioを表示', { timeout: 30000 });
   await page.getByRole('button', { name: '保存を削除' }).click();

@@ -29,6 +29,7 @@ function startAnimation() {
 }
 
 async function display(pack: ViewerPackage) {
+  cancelAnimationFrame(frame);
   avatar?.destroy(); avatar = undefined;
   releaseAssets();
   const local = viewerAssetUrls(pack);
@@ -37,7 +38,7 @@ async function display(pack: ViewerPackage) {
   element('welcome').hidden = true;
   try {
     avatar = await createMeshAvatar(canvas, { rig: pack.rig, assets: local.assets, manual: true });
-    avatar.advance(1);
+    avatar.advance(1 / 30, 30);
     element('controls').hidden = false;
     element('forget').hidden = false;
     document.querySelector('h1')!.textContent = pack.name;
