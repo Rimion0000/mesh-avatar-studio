@@ -1,8 +1,19 @@
 # 外出先のiPhoneでMioを見る
 
-閲覧ページは **https://rion3110.github.io/mesh-avatar-studio/** です。
-iPhoneのSafariで開きます。PCを起動し続ける必要はありません。
+閲覧ページの公開先は **https://rion3110.github.io/mesh-avatar-studio/** です。
+下の公開設定が済むと、iPhoneのSafariで開けます。PCを起動し続ける必要はありません。
 GitHubに公開するのは閲覧ページのコードだけです。Mioの画像は初回に自分のiPhoneへ渡し、そのSafari内に保存します。
+
+## 初回だけ：GitHub Pagesを有効にする
+
+公開用の `mio/viewer-site` ブランチは準備済みです。
+[Settings → Pages](https://github.com/Rion3110/mesh-avatar-studio/settings/pages) で次を選び、**Save** を押します。
+
+- Source：**Deploy from a branch**
+- Branch：**mio/viewer-site**
+- フォルダ：**/ (root)**
+
+公開処理が完了するまで数分かかることがあります。GitHub連携からの設定変更が権限不足で拒否された場合も、所有者がこの画面から設定できます。
 
 ## 初回だけ：表示用ファイルをiPhoneへ渡す
 
@@ -57,4 +68,6 @@ GitHub Pagesの公開元は、リポジトリの **Settings → Pages → Deploy
 閲覧ページのコード更新と、Mioの画像の更新は別々です。画像の更新は `npm run export:mio` とiPhoneでの再読み込みで行います。
 
 ローカルで閲覧ページだけを確認する場合は `npm run build:viewer` を実行し、`npx vite preview --config vite.viewer.config.ts` で起動できます。
-`npm run dev:viewer` はコード開発用です。画像保存と描画の確認には本番ビルドのプレビューを使ってください。
+`npm run dev:viewer` はコード開発用です。公開版の画像保存と描画の確認には本番ビルドのプレビューを使ってください。
+
+検証ではChromiumのiPhone画面サイズで縦横表示・表情・端末内保存・再表示・削除を確認しています。iPhone実機のSafariでの検証は未実施です。
