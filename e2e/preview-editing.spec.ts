@@ -6,6 +6,29 @@ import { PNG } from 'pngjs';
 import fixture from '../samples/miko-qipao/rig.json' with { type: 'json' };
 
 const hash = (buffer: Buffer) => createHash('sha256').update(buffer).digest('hex');
+
+test('paused eye sliders immediately switch drawn blink frames and restore open eyes', async ({ page }) => {
+  test.skip(!samplePresent, sampleSkipReason);
+  await page.goto('/');
+  await dismissGuide(page);
+  const preview = page.getByTestId('preview');
+  await expect(page.getByTestId('preview-status')).toHaveAttribute('data-state', 'ready');
+  const revision = Number(await preview.getAttribute('data-revision'));
+  await page.getByTestId('idle-toggle').click();
+  await expect.poll(async () => Number(await preview.getAttribute('data-revision')), { timeout: 30_000 }).toBeGreaterThan(revision);
+  await expect(page.getByTestId('preview-status')).toHaveAttribute('data-state', 'ready');
+  const open = hash(await preview.screenshot());
+  const frames = [open];
+  for (const value of ['0.5', '0']) {
+    await page.getByRole('slider', { name: 'Eyes open', exact: true }).fill(value);
+    await expect.poll(async () => hash(await preview.screenshot())).not.toBe(frames.at(-1));
+    frames.push(hash(await preview.screenshot()));
+  }
+  expect(new Set(frames).size).toBe(3);
+  await page.getByRole('slider', { name: 'Eyes open', exact: true }).fill('1');
+  await expect.poll(async () => hash(await preview.screenshot())).toBe(open);
+});
+
 async function drag(page: Page, point: [number, number], delta: [number, number]) {
   const canvas = page.getByTestId('editor');
   const box = (await canvas.boundingBox())!;

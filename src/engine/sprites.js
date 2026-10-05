@@ -131,7 +131,9 @@ export function createSpriteModule(engine, rig) {
           const st = eyeState[i];
           const want = eyeSprite(open, smile) ?? 'open';
           if (want !== st.cur) { st.prev = st.cur; st.cur = want; st.t = 0; }
-          st.t = Math.min(1, st.t + dt / EYE_FADE_SEC);
+          // A zero-time render applies a static pose (e.g. a paused editor slider).
+          // There will be no subsequent animation frames to finish its cross-fade.
+          st.t = dt === 0 ? 1 : Math.min(1, st.t + dt / EYE_FADE_SEC);
           const k = sstep(0, 1, st.t);
           const show = (name, alpha) => {
             if (name === 'open' || alpha <= 0.001) return;

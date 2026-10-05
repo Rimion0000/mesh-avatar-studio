@@ -1,0 +1,14 @@
+{
+  "image": { "width": 1086, "height": 1448 },
+  "parts": {
+    "back_hair": "mio_back_hair.png",
+    "body": "mio_body.png",
+    "front_hair": "mio_front_hair.png"
+  },
+  "compositeOrder": ["back_hair", "body", "front_hair"],
+  "hairMask": {
+    "bodyOcclusionAlpha": 20,
+    "frontHairOnBodyMinAlpha": 200,
+    "headAccessoryPolygon": [[613,75],[634,72],[650,84],[662,104],[665,136],[657,162],[672,222],[658,254],[629,248],[622,190],[614,157],[610,121]]
+  }
+}

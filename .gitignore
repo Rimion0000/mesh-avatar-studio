@@ -8,4 +8,9 @@ playwright-report/
 __pycache__/
 projects/
 work/
+# Mio's tracked recipe contains text only; all images belong in projects/.
+configs/mio/*
+!configs/mio/rig.json
+!configs/mio/rig.draft.json
+!configs/mio/rebuild.json
 samples/**/review/
